@@ -1,1 +1,5 @@
 data/
+ml_tasks_Next/ObjectDetection-master/kaggle_simpson_testset/
+ml_tasks_Next/ObjectDetection-master/simpsons_dataset/
+.idea/
+ml_tasks/unet-master/data/
