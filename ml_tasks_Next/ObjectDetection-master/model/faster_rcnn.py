@@ -1,7 +1,7 @@
 from keras import backend as K
-from keras.optimizers import Adam
-from keras.layers import Input
-from keras.models import Model
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
 
 from model import losses as losses
 from model import resnet as nn

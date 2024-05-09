@@ -8,10 +8,11 @@ Adapted from code contributed by BigMoyan.
 from __future__ import print_function
 from __future__ import absolute_import
 
-from keras.layers import Input, Add, Dense, Activation, Flatten, Convolution2D, MaxPooling2D, ZeroPadding2D, \
-    AveragePooling2D, TimeDistributed
+from keras.layers import (Input, Add, Dense, Activation,
+                          Flatten, Convolution2D, MaxPooling2D,
+                          ZeroPadding2D, AveragePooling2D, TimeDistributed)
 
-from keras import backend as K
+from tensorflow.keras import backend as K
 
 from model.RoiPoolingConv import RoiPoolingConv
 from model.FixedBatchNormalization import FixedBatchNormalization
@@ -39,7 +40,7 @@ def identity_block(input_tensor, kernel_size, filters, stage, block, trainable=T
     x = Convolution2D(nb_filter3, (1, 1), name=conv_name_base + '2c', trainable=trainable)(x)
     x = FixedBatchNormalization(axis=bn_axis, name=bn_name_base + '2c')(x)
 
-    x = Add()([x, input_tensor])
+    x = Add()([x, input_tensor]) #residual connection
     x = Activation('relu')(x)
     return x
 

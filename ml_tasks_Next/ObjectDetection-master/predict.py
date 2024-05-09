@@ -8,9 +8,9 @@ import time
 
 from model import config, data_generators
 import model.resnet as nn
-from keras import backend as K
-from keras.layers import Input
-from keras.models import Model
+from tensorflow.keras import backend as K
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
 from model import roi_helpers
 overlap_thresh = 0.2
 bbox_threshold = 0.5

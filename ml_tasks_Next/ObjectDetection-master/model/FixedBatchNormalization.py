@@ -1,7 +1,8 @@
-from keras.engine import Layer, InputSpec
-from keras import initializers, regularizers
-from keras import backend as K
 
+from tensorflow.keras.layers import Layer, InputSpec
+from tensorflow.keras import initializers, regularizers
+from tensorflow.keras import backend as K
+import tensorflow
 
 class FixedBatchNormalization(Layer):
 
@@ -49,25 +50,25 @@ class FixedBatchNormalization(Layer):
     def call(self, x, mask=None):
 
         assert self.built, 'Layer must be built before being called'
-        input_shape = K.int_shape(x)
+        input_shape = tensorflow.keras.backend.int_shape(x)
 
         reduction_axes = list(range(len(input_shape)))
         del reduction_axes[self.axis]
         broadcast_shape = [1] * len(input_shape)
         broadcast_shape[self.axis] = input_shape[self.axis]
 
-        if sorted(reduction_axes) == range(K.ndim(x))[:-1]:
+        if sorted(reduction_axes) == range(tensorflow.keras.backend.ndim(x))[:-1]:
             x_normed = K.batch_normalization(
                 x, self.running_mean, self.running_std,
                 self.beta, self.gamma,
                 epsilon=self.epsilon)
         else:
             # need broadcasting
-            broadcast_running_mean = K.reshape(self.running_mean, broadcast_shape)
-            broadcast_running_std = K.reshape(self.running_std, broadcast_shape)
-            broadcast_beta = K.reshape(self.beta, broadcast_shape)
-            broadcast_gamma = K.reshape(self.gamma, broadcast_shape)
-            x_normed = K.batch_normalization(
+            broadcast_running_mean = tensorflow.keras.backend.reshape(self.running_mean, broadcast_shape)
+            broadcast_running_std = tensorflow.keras.backend.reshape(self.running_std, broadcast_shape)
+            broadcast_beta = tensorflow.keras.backend.reshape(self.beta, broadcast_shape)
+            broadcast_gamma = tensorflow.keras.backend.reshape(self.gamma, broadcast_shape)
+            x_normed = tensorflow.keras.backend.batch_normalization(
                 x, broadcast_running_mean, broadcast_running_std,
                 broadcast_beta, broadcast_gamma,
                 epsilon=self.epsilon,axis=0)
@@ -81,3 +82,6 @@ class FixedBatchNormalization(Layer):
                   'beta_regularizer': self.beta_regularizer.get_config() if self.beta_regularizer else None}
         base_config = super(FixedBatchNormalization, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
+
+    def compute_output_shape(self, input_shape):
+        return (input_shape[0])

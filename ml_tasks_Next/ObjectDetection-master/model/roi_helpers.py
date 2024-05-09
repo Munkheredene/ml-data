@@ -258,7 +258,7 @@ def rpn_to_roi(rpn_layer, regr_layer, C, dim_ordering, use_regr=True, max_boxes=
                 regr = regr_layer[0, :, :, 4 * curr_layer:4 * curr_layer + 4]
                 regr = np.transpose(regr, (2, 0, 1))
 
-            X, Y = np.meshgrid(np.arange(cols),np. arange(rows))
+            X, Y = np.meshgrid(np.arange(cols), np. arange(rows))
 
             A[0, :, :, curr_layer] = X - anchor_x/2
             A[1, :, :, curr_layer] = Y - anchor_y/2

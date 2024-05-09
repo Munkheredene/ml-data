@@ -17,13 +17,15 @@ from model import config, data_generators
 from model.parser import get_data
 import model.roi_helpers as roi_helpers
 
-from keras import backend as K
-from keras.utils import generic_utils
+from tensorflow.keras import backend as K
+
+from tensorflow.python.keras.utils import generic_utils
+
 
 sys.setrecursionlimit(10000)
 
 parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, description='Object Detection')
-parser.add_argument("-p", "--path", default=None, help="path to annotation file")
+parser.add_argument("-p", "--path", default='annotation.txt', help="path to annotation file")
 parser.add_argument("--save_dir", default="./save", help="path to save directory")
 parser.add_argument('--n_epochs', default=10, type=int, metavar='N',
                     help='number of epochs')
@@ -38,14 +40,15 @@ parser.add_argument('--rot_90', action='store_true',
 
 def main():
     args = parser.parse_args()
+
     time_stamp = "{0:%Y%m%d-%H%M%S}".format(datetime.now())
     save_name = os.path.join(args.save_dir, "train_{}".format(time_stamp))
 
-    if not(os.path.isdir(args.save_dir)):
+    if not (os.path.isdir(args.save_dir)):
         os.makedirs(args.save_dir)
-    if args.path == None:
+    if args.path==None:
         raise OSError("path to annotation file must be required.")
-    C = config.Config()
+    C=config.Config()
     C.config_filename = save_name + "_config.pickle"
     C.model_path = save_name + "_model.hdf5"
     C.use_horizontal_flips = bool(args.horizontal_flips)
@@ -150,8 +153,8 @@ def main():
 
                         target_text_file = open('out.csv', 'a')
                         target_text_file.write('{},{},{},{},{},{}'.format(class_acc, loss_rpn_cls,
-                                                loss_rpn_regr, loss_class_cls, loss_class_regr,
-                                                loss_rpn_cls + loss_rpn_regr + loss_class_cls + loss_class_regr))
+                                                                          loss_rpn_regr, loss_class_cls, loss_class_regr,
+                                                                          loss_rpn_cls + loss_rpn_regr + loss_class_cls + loss_class_regr))
                         target_text_file.write('\t')
 
                         curr_loss = loss_rpn_cls + loss_rpn_regr + loss_class_cls + loss_class_regr
