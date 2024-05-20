@@ -3,5 +3,9 @@ ml_tasks_Next/ObjectDetection-master/kaggle_simpson_testset/
 ml_tasks_Next/ObjectDetection-master/simpsons_dataset/
 .idea/
 ml_tasks/unet-master/data/
-deeplearning_task/input
-ml_tasks_time_series/data
+deeplearning_task/input/
+ml_tasks_time_series/data/
+ml_tasks_Next/CVC-ClinicDB/
+ml_tasks_Next/CVC-612/
+ml_tasks_Next/images/
+ml_tasks_Next/mask/
